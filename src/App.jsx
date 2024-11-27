@@ -1,6 +1,5 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { ChildArea } from "./ChildArea";
 
 export default function App() {
@@ -11,22 +10,26 @@ export default function App() {
   const onClickCountup = () => {
     setCount(count + 1);
   };
+
   const onChangeText = (event) => {
-    setText(event.target.value)
-  }
+    setText(event.target.value);
+  };
   const onClickChangeDisplay = () => {
     setDisplayValue(!displayValue);
-  }
+  };
+
+  const onClickClose = useCallback(() => setDisplayValue(false), []);
+
   return (
     <>
       <div className="App">
-        <input type="text" value={text} onChange={onChangeText}/>
+        <input type="text" value={text} onChange={onChangeText} />
         <br />
         <br />
         <button onClick={onClickChangeDisplay}>表示</button>
         <p>{displayValue}</p>
         <>
-          <ChildArea open={displayValue}/>
+          <ChildArea open={displayValue} onClose={onClickClose} />
         </>
       </div>
     </>
